@@ -1,0 +1,6 @@
+- [[MongoDB/Introduction]]
+- [[MongoDB/Advanced]]
+- Resource
+	- [Official website](https://www.mongodb.com/)
+	- [Learning mongodb](https://learn.mongodb.com/)
+	- [# ♥MongoDB教程 - Mongo知识体系详解♥](https://pdai.tech/md/db/nosql-mongo/mongo.html)
