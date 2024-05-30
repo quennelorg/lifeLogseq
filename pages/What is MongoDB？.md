@@ -9,7 +9,7 @@
 		- no document data schema required
 		- 如果你想，每个文档都可以有不同的字段
 	- Performant
-		- 都基于文档了，随意的定义字段，性能上肯定优于SQL
+		- 都基于文档了，随意的定义字段，性能上肯定优于SQL，特别是可以通过横向拓展，副本集等
 - ## 官方描述
 	- ### 1. 面向文档的存储
 		- MongoDB使用类似于JSON（JavaScript Object Notation）格式的BSON（Binary JSON）来存储数据。每个记录称为一个文档，文档是以键值对（key-value pair）的形式组织的。这种结构使得数据模式非常灵活，可以方便地进行嵌套和复杂的数据表示。
