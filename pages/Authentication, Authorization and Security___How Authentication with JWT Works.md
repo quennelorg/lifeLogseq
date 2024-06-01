@@ -1,5 +1,6 @@
 - JWT（JSON Web Token）是一种紧凑的、URL 安全的令牌格式，用于在各方之间传递经过签名和加密的数据。JWT 通常用于认证和授权系统中，用于安全地传输信息。
 	- ![image.png](../assets/image_1717163863989_0.png)
+	- ![image.png](../assets/image_1717226367763_0.png)
 - ### JWT 的结构
   collapsed:: true
 	- JWT 由三个部分组成，每个部分之间用点（`.`）分隔：
