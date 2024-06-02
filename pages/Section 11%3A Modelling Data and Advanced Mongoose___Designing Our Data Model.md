@@ -1,0 +1,2 @@
+- data model image
+	- ![image.png](../assets/image_1717312062706_0.png)

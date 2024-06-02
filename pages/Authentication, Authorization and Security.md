@@ -347,3 +347,207 @@
 		  });
 		  ```
 - Updating the Current User: Password
+  collapsed:: true
+	- router
+	  collapsed:: true
+		- ```javascript
+		  router.patch(
+		    '/updateMyPassword',
+		    authController.protect,
+		    authController.updatePassword,
+		  );
+		  ```
+	- authController
+	  collapsed:: true
+		- ```javascript
+		  exports.updatePassword = catchAsync(async (req, res, next) => {
+		    // 1 get user from collection
+		  
+		    const user = await User.findById(req.user.id).select('+password');
+		    // console.log(user);
+		    const correct = await user.correctPassword(
+		      req.body.passwordCurrent,
+		      user.password,
+		    );
+		    // 2 check if posted current password is correct
+		    if (!user || !correct) {
+		      return next(new AppError('Your current password is wrong', 401));
+		    }
+		    // 3 if so, update password
+		    user.password = req.body.password;
+		    user.passwordConfirm = req.body.passwordConfirm;
+		    await user.save();
+		    // User.findByIdAndUpdate will NOT work as intended
+		  
+		    // 4 log user in, send jwt
+		  
+		    const token = signToken(user._id);
+		  
+		    res.status(200).json({
+		      status: 'success',
+		      token,
+		    });
+		  });
+		  ```
+- Updating the Current User: Data
+  collapsed:: true
+	- userController
+	  collapsed:: true
+		- ```javascript
+		  exports.updateMe = catchAsync(async (req, res, next) => {
+		    // 1 create error if user POSTS password data
+		    if (req.body.password || req.body.passwordConfirm) {
+		      return next(
+		        new AppError(
+		          'This route is not for password updates. please use /updateMyPassword',
+		        ),
+		        400,
+		      );
+		    }
+		    // 2 Filtered out unwanted fields names that are not allowed to be updated
+		    const filteredBody = filterObj(req.body, 'name', 'email');
+		  
+		    // 2 update user document
+		    const updateduser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+		      new: true,
+		      runValidators: true,
+		    });
+		  
+		    res.status(200).json({
+		      status: 'success',
+		      data: {
+		        user: updateduser,
+		      },
+		    });
+		  });
+		  ```
+	- route
+	  collapsed:: true
+		- ```javascript
+		  router.patch('/updateMe', authController.protect, updateMe);
+		  
+		  ```
+	-
+- Deleting the Current User
+  collapsed:: true
+	- userController
+	  collapsed:: true
+		- ```javascript
+		  exports.deleteMe = catchAsync(async (req, res, next) => {
+		    await User.findByIdAndUpdate(req.user.id, { active: false });
+		  
+		    res.status(204).json({
+		      status: 'success',
+		      data: null,
+		    });
+		  });
+		  ```
+	- userRouter
+	  collapsed:: true
+		- ```javascript
+		  router.delete('/deleteMe', authController.protect, deleteMe);
+		  
+		  ```
+	- userModel
+	  collapsed:: true
+		- ```javascript
+		    active: {
+		      type: Boolean,
+		      default: true,
+		      select: false,
+		    },
+		  
+		  userSchema.pre(/^find/, function (next) {
+		    // this points to the current query
+		    this.find({ active: { $ne: false } });
+		    next();
+		  });
+		  ```
+-
+- [[Authentication, Authorization and Security/Security Best Practices]]
+-
+- Sending JWT via Cookie
+  collapsed:: true
+	- authController
+	  collapsed:: true
+		- ```javascript
+		  const createSendToken = (user, statusCode, res) => {
+		    const token = signToken(user._id);
+		  
+		    const cookieOptions = {
+		      expires: new Date(
+		        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+		      ),
+		      httpOnly: true,
+		    };
+		    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+		    res.cookie('jwt', token, cookieOptions);
+		  
+		    // remove password from output
+		    user.password = undefined;
+		    res.status(statusCode).json({
+		      status: 'success',
+		      token,
+		      data: {
+		        user,
+		      },
+		    });
+		  };
+		  ```
+- Implementing Rate Limiting
+  collapsed:: true
+	- app.js
+	  collapsed:: true
+		- ```javascript
+		  const rateLimit = require('express-rate-limit');
+		  
+		  const limiter = rateLimit({
+		    max: 100,
+		    windowMs: 60 * 60 * 1000,
+		    message: 'Too many request from this IP, please try again in an hour',
+		  });
+		  
+		  app.use('/api', limiter);
+		  ```
+- Setting Security HTTP Headers
+  collapsed:: true
+	- app.js
+		- ```javascript
+		  const helmet = require('helmet');
+		  
+		  app.use(helmet());
+		  
+		  ```
+- Data Sanitization
+  collapsed:: true
+	- app.js
+	  collapsed:: true
+		- ```javascript
+		  const mongoSanitize = require('express-mongo-sanitize');
+		  const xss = require('xss-clean');
+		  
+		  // data sanitization against NoSQL query injection
+		  app.use(mongoSanitize());
+		  // data sanitization against XSS
+		  app.use(xss());
+		  ```
+- Preventing Parameter Pollution
+  collapsed:: true
+	- app.js
+		- ```javascript
+		  const hpp = require('hpp');
+		  
+		  // prevent parameter pollution
+		  app.use(
+		    hpp({
+		      whitelist: [
+		        'duration',
+		        'ratingsQuantity',
+		        'ratingsAverage',
+		        'maxGroupSize',
+		        'difficulty',
+		        'price',
+		      ],
+		    }),
+		  );
+		  ```

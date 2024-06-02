@@ -1,0 +1,2 @@
+- [[QA Record/user.isModified is not a function when doing a pre update in mongoose]]
+-
