@@ -580,6 +580,53 @@
 	  
 	  ```
 - Geospatial Queries: Finding Tours Within Radius
-	-
+  collapsed:: true
+	- tourRoute
+	  collapsed:: true
+		- ```javascript
+		  router
+		    .route('/tours-within/:distance/center/:latlng/unit/:unit')
+		    .get(getToursWithin);
+		  // /tours-within?distance=233&center=-40,45&unit=mi
+		  // /tours-within?233&center/-40,45&unit/mi
+		  
+		  ```
+	- tourController
+	  collapsed:: true
+		- ```javascript
+		  exports.getToursWithin = catchAsync(async (req, res, next) => {
+		    const { distance, latlng, unit } = req.params;
+		    const [lat, lng] = latlng.split(',');
+		  
+		    const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+		  
+		    if (!lat || !lng) {
+		      next(
+		        new AppError(
+		          'Please provide latitude and lng in the format lat,lng.',
+		          400,
+		        ),
+		      );
+		    }
+		  
+		    const tours = await Tour.find({
+		      startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+		    });
+		    res.status(200).json({
+		      status: 'success',
+		      results: tours.length,
+		      data: {
+		        data: tours,
+		      },
+		    });
+		  });
+		  ```
+	- tourModel
+	  collapsed:: true
+		- ```javascript
+		  tourSchema.index({ startLocation: '2dsphere' });
+		  
+		  ```
+- Geospatial Aggregation: Calculating Distances
 -
 -
