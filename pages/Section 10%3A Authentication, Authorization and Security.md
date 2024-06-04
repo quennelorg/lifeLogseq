@@ -1,6 +1,7 @@
-- [[Authentication, Authorization and Security/modelUser]]
-- [[Authentication, Authorization and Security/Managing Passwords]]
-- [[Authentication, Authorization and Security/How Authentication with JWT Works]]
+- [[Section 10: Authentication, Authorization and Security/modelUser]]
+  title:: Section 10: Authentication, Authorization and Security
+- [[Section 10: Authentication, Authorization and Security/Managing Passwords]]
+- [[Section 10: Authentication, Authorization and Security/How Authentication with JWT Works]]
 - Using jwt
   collapsed:: true
 	- ```javascript
@@ -464,7 +465,7 @@
 		  });
 		  ```
 -
-- [[Authentication, Authorization and Security/Security Best Practices]]
+- [[Section 10: Authentication, Authorization and Security/Security Best Practices]]
 -
 - Sending JWT via Cookie
   collapsed:: true

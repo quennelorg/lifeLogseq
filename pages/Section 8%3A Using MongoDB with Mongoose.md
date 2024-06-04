@@ -1,6 +1,7 @@
-- [[Using MongoDB with Mongoose/Virtual Properties]]
+- [[Section 8: Using MongoDB with Mongoose/Virtual Properties]]
+  title:: Section 8: Using MongoDB with Mongoose
 -
-- [[Using MongoDB with Mongoose/Document Middleware]]
+- [[Section 8: Using MongoDB with Mongoose/Document Middleware]]
 -
 - validation
 	- https://github.com/validatorjs/validator.js

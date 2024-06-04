@@ -1,5 +1,5 @@
 - 在 Mongoose 中，虚拟属性 (Virtual Properties) 是一种定义在模式 (Schema) 上的属性，它们不会直接存储在 MongoDB 数据库中，但可以基于文档的其他字段动态计算和生成。虚拟属性通常用于格式化或组合数据，以便在从数据库检索文档时更方便地使用和展示这些数据。
-  title:: Using MongoDB with Mongoose/Virtual Properties
+  title:: Section 8: Using MongoDB with Mongoose/Virtual Properties
 - ### 使用虚拟属性的场景
   虚拟属性可以用于：
   1. **计算派生值**：例如，根据用户的名字和姓氏计算全名。
