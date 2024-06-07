@@ -3,5 +3,10 @@
 - [[Section 9: Error Handling with Express]]
 - [[Section 10: Authentication, Authorization and Security]]
 - [[Section 11: Modelling Data and Advanced Mongoose]]
+- [[Section 12: Server-Side Rendering with Pug Templates]]
+- [[Section 13: Advanced Features: Payments, Email, File Uploads]]
 -
+- https
+- cors
+	- https://www.npmjs.com/package/cors
 -
