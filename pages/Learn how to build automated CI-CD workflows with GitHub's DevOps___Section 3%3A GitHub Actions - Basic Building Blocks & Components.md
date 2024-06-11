@@ -113,13 +113,45 @@
 -
 - Actions
   collapsed:: true
-	- command: 'run'
-	- Action: A (custom) application that performs a (typically complex) frequently repeated task
 	- image
+	  collapsed:: true
 		- ![image.png](../assets/image_1717904612533_0.png)
+	- command: `run` or `uses`
+	- Action
+		- A (custom) application that performs a (typically complex) frequently repeated task
+		- You can build your own Actions but you can also use official or community Actions
+	- own actions
+		- use git to clone the code from the repository onto this machine
+		- it is extremely unnecessary work, it is common task, action has been created
+		- run command
+	- others actions
+		- you can go to marketplace, to find all free actions
+			- [Marketplace](https://github.com/marketplace?type=actions)
+		- official actions
+			- created and maintained by github team
+				- [Action-checkout](https://github.com/actions/checkout)
+					- find usage
+					- Download code from the repository onto this runners
+		- other group actions
+			- created and maintained by other companies or by simple community members
+		- key `with` is for setting config
 -
 - 定义的第一个步骤，是一个实际获取代码的步骤，从代码库中下载代码，jobs和这些steps，是在 GitHub 拥有的服务器或你自己的服务器上运行的，但在这里我们使用的是 GitHub 服务器。它们并不在你的代码库内部运行，你可能会认为它们是这样运行的，但事实并非如此。它们与代码库相关联，它们可以轻松访问代码库代码，但它们并不在代码库中运行。代码库不是服务器，如果一定要说，它只是 GitHub 拥有的一台机器上的硬盘上的一个文件夹。这一点非常重要，因为如果你记住这一点，你就会明白这个服务器是由 GitHub 提供给你用来运行这些步骤的，并不会自动拥有你的代码。因此，如果你有一些步骤依赖于代码的存在，就像这里的这些步骤一样，你必须首先下载你的代码作为第一步。如果你想要安装依赖和运行测试的步骤，你必须首先将你的代码下载到这个由 GitHub 提供的服务器上，因此这是我在这里定义的实际第一步，一个将从这个 GitHub 代码库中下载代码到这个运行环境、这个服务器上的步骤。这就是我们将探索的另一个关键构建块，由 GitHub Actions 提供的一个 Action。
 -
-- [Action-checkout](https://github.com/actions/checkout)
+- 经过第一步，我们得到了我们的代码，接下来就可以运行我们想要的任务，比如跑测试，不过在跑测试之前，
+	- 要确保nodejs是已经安装
+		- 如果选中的机器是ubuntu，nodejs是已经安装的
+			- 预装软件详情可见 **[runner-images](https://github.com/actions/runner-images)**
+		- 当然也可以安装nodejs
+			- `uses: actions/setup-node`
+			- [setup-node](https://github.com/actions/setup-node)
+			- 可以用with来指定node-version
+	- 然后需要安装项目依赖
+		- `run: npm install or ci`
+	- 然后再运行测试
+		- `run: npm test`
+-
+-
+-
 -
 -
