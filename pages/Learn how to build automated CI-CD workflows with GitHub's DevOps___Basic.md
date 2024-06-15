@@ -1,5 +1,4 @@
 - 什么是GitHub Action
-  collapsed:: true
 	- GitHub Actions 是 GitHub 提供的一种持续集成和持续部署（CI/CD）服务。它允许开发者在 GitHub 仓库中自动化他们的工作流，例如构建、测试和部署代码。通过定义工作流文件，开发者可以在代码仓库的特定事件（如代码推送、Pull Request 等）发生时自动触发相应的任务。
 	  
 	  GitHub Actions 的主要特点包括：
